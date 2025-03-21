@@ -1,0 +1,9 @@
+.\objects\gps.o: gps.c
+.\objects\gps.o: gps.h
+.\objects\gps.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Driver\Include\Driver_USART.h
+.\objects\gps.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Driver\Include\Driver_Common.h
+.\objects\gps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\gps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\gps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\gps.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\gps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

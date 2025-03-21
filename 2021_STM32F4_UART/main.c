@@ -40,6 +40,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
+#include "gps.h"
 
 #include "Driver_USART.h"               // ::CMSIS Driver:USART
 #include "Board_LED.h"                  // ::Board Support:LED
@@ -102,17 +103,7 @@ static void SystemClock_Config(void);
 static void Error_Handler(void);
 
 //fonction de CB lancee si Event T ou R
-void event_UART(uint32_t event)
-{
-	switch (event) {		
-		
-		case (ARM_USART_EVENT_SEND_COMPLETE | ARM_USART_EVENT_TX_COMPLETE) : 	osSignalSet(tid_Thread_T, 0x01);
-																																					break;
-		
-		default : break;
 
-	}
-}
 
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -166,6 +157,8 @@ int main(void)
   osKernelStart();
 	//LED_On (3);
 //#endif
+ITM_SendChar('Z');
+printf("test");
 	osDelay(osWaitForever);
 	
   /* Infinite loop */
@@ -177,23 +170,15 @@ int main(void)
 void Thread_T (void const *argument) {
 	char i=0;
   char trame[70];
-	float latitude, longitude;
+	float latitude, longitude, seconde;
+	char heure, minute;
   
   
   while (1) {
-    Driver_USART3.Receive(trame,70);			//recoit les 70 charactères qui nous intéressent
+    gps_getData(&latitude, &longitude, &heure, &minute, &seconde);
 		osSignalWait(0x01, osWaitForever);		// sommeil fin emission.
-		if (trame[18] !=','){			//vérifie que le 19 e caractère n'est pas une virgule (et donc qu'on a une valeur)
-			sscanf(&trame[18], ",%9f,", &latitude);
-
-		}
-		if (trame[30] !=','){			//vérifie que le 19 e caractère n'est pas une virgule (et donc qu'on a une valeur)
-			sscanf(&trame[30], ",%10f,", &longitude);
-		}
-		LED_On (i);
-		i++;
-		if (i == 4) i = 0; 
-		osDelay(200);
+		
+		
   }
 }
 
